@@ -13,7 +13,10 @@ from django.urls import reverse
 # In order to acces polls/templates/polls/index.html
 from django.template import loader
 
-from .models import Question
+from .models import Question, Choice
+
+# Amend genereic views
+from django.views import generic
 
 """
 def index(request):
@@ -40,7 +43,26 @@ def index(request):
     return HttpResponse(template.render(context, request))
 """
 
-#Shortcut: render()
+# Create a class for generic view design pattern
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return Question.objects.order_by('-pub_date')[:5]
+
+# Example generic view: polls/question_detail.html
+class DetailView(generic.DetailView):
+    model = Question
+    template_name = 'polls/detail.html'
+
+
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'polls/results.html'
+
+#Shortcut: render(), redundant display method
 def index(request):
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
     context = {'latest_question_list': latest_question_list}
