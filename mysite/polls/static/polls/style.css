@@ -1,0 +1,29 @@
+/* unvisited link, like blue */
+li a:link {
+    color: #33FFE6;
+}
+
+/* visited link, like green */
+li a:visited {
+    color: #33FF68;
+}
+
+/* mouse over link */
+li a:hover {
+    color: red;
+}
+
+/* selected link */
+li a:active {
+    color: yellow;
+}
+
+ul {
+    background: #3399ff;
+    padding: 20px;
+}
+
+ul li {
+    background: white;
+    margin: 5px;
+}
